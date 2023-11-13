@@ -6,3 +6,5 @@ pandas
 numpy
 backtrader
 keras
+plotly
+databento
