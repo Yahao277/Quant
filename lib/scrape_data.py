@@ -2,7 +2,8 @@ import databento as db
 import pandas as pd
 import numpy as np
 # %%
-client = db.Historical('db-4kXRPcWr9yDsi8uY75JGykRGcDbaB')
+apikey = ''
+client = db.Historical(apikey)
 data = client.timeseries.get_range(
     dataset="GLBX.MDP3",
     stype_in='continuous',

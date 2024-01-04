@@ -1,8 +1,8 @@
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta, timezone, time
 import pandas as pd
 import pytz
 
-from date_utils import find_transition_dates
+from lib.utils.date_utils import find_transition_dates
 
 from lib.models.session_dto import SessionDto
 
@@ -55,6 +55,28 @@ class SessionService:
                     price_df=session_data
                 )
         return day_data
+
+    @staticmethod
+    def get_dr_sessions_times(day: datetime, is_edt: bool):
+        time_slots_est = {
+            'RDR': (time(14,30,0, tzinfo=timezone.utc), time(21,0,0, tzinfo=timezone.utc)),
+            'ODR': (time(8,0,0, tzinfo=timezone.utc), time(13,30,0, tzinfo=timezone.utc)),
+            'ADR': (time(0,30,0, tzinfo=timezone.utc), time(7,0,0, tzinfo=timezone.utc)),
+        }
+
+        time_slots_edt = {
+            'RDR': (time(13,30,0, tzinfo=timezone.utc), time(20,0,0, tzinfo=timezone.utc)),
+            'ODR': (time(7,0,0, tzinfo=timezone.utc), time(12,30,0, tzinfo=timezone.utc)),
+            'ADR': (time(23,30,0, tzinfo=timezone.utc), time(6,0,0, tzinfo=timezone.utc)),
+        }
+
+        selected_time_slots = time_slots_edt if is_edt else time_slots_est
+        final_time_slots = {}
+        for k, v in selected_time_slots.items():
+            final_time_slots[k] = datetime.combine(day, v[0]), datetime.combine(day, v[1], tzinfo=timezone.utc)
+            if is_edt and k == 'ADR':
+                final_time_slots['ADR'] = (final_time_slots['ADR'][0] - timedelta(days=1), final_time_slots['ADR'][1])
+        return final_time_slots
 
 
 

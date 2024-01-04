@@ -1,7 +1,8 @@
 import pandas as pd
 
-from lib.analyzer import Analyzer
-from lib.date_utils import is_edt
+from lib.services.analyzer import Analyzer
+from lib.services.enricher.dr_info_enricher import DrInfoEnricher
+from lib.utils.date_utils import (is_edt)
 from lib.services.session_service import SessionService
 
 '''
@@ -26,9 +27,14 @@ class Processor:
         self.data['timezone'] = self.data.index.map(
             lambda x: 'EDT' if is_edt(x.to_pydatetime().replace(tzinfo=None)) else 'EST')
         self.sessions_group = SessionService.split_by_day_session(self.data)
+        #self.sessions_group = DrInfoEnricher.enrich_group(self.sessions_group)
         self.sorted_sessions = sorted(self.sessions_group.keys())
 
-    def process(self):
+
+    '''
+    Process each day's session and let analyzer to make custom analysis
+    '''
+    def analyze(self):
         self.analyzer.reset()
         for key in self.sorted_sessions:
             session_data = self.sessions_group[key]

@@ -1,53 +1,29 @@
-import numpy as np
+# %% load files
 import pandas as pd
 import sys
+
 sys.path.append('lib')
-from date_utils import is_edt
-from services.session_service import SessionService
+
+# Load sample data with ts_event as datetime index
+df = pd.read_csv('data/out/ES.ohlcv-1m.sample.csv', index_col='ts_event', parse_dates=True)
+
+regular_df: pd.DataFrame = df.resample('5T').agg({'open': 'first',
+                                                  'high': 'max',
+                                                  'low': 'min',
+                                                  'close': 'last',
+                                                  'volume': 'sum'})
+# drop nan values
+regular_df.dropna(inplace=True)
+
+# %% Using Processor
+from lib.services.processor import Processor
+from lib.services.analyzer import Analyzer
+analyzer = Analyzer()
+processor = Processor(data=regular_df, analyzer=analyzer)
+
+report = processor.analyze()
+
+report
 
 # %%
-# if main run this
-if __name__ == '__main__':
-    print('hello')
-
-# %%
-class Main:
-    def __init__(self, name):
-        self.name = name
-
-    def run(self):
-        print(f'Hello, {self.name}!')
-
-    def greet(self, other_name):
-        print(f'Hello, {other_name}, my name is {self.name}.')
-
-
-class DataService:
-    def __init__(self, name):
-        self.name = name
-
-    def run(self):
-        print(f'Hello, {self.name}!')
-
-    def greet(self, other_name):
-        print(f'Hello, {other_name}, my name is {self.name}.')
-
-class DataAnalyzer:
-    def __init__(self, name):
-        self.name = name
-
-    def run(self):
-        print(f'Hello, {self.name}!')
-
-    def greet(self, other_name):
-        print(f'Hello, {other_name}, my name is {self.name}.')
-
-class StrategySetup:
-    def __init__(self, name):
-        self.name = name
-
-    def run(self):
-        print(f'Hello, {self.name}!')
-
-    def greet(self, other_name):
-        print(f'Hello, {other_name}, my name is {self.name}.')
+processor.sessions_group
