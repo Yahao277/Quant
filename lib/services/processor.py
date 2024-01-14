@@ -20,6 +20,7 @@ class Processor:
         self.data = data
         self.analyzer = analyzer
         self._preprocess()
+        self._dr_info_enricher = DrInfoEnricher()
 
     # define a preprocess private method
     def _preprocess(self):
@@ -27,7 +28,7 @@ class Processor:
         self.data['timezone'] = self.data.index.map(
             lambda x: 'EDT' if is_edt(x.to_pydatetime().replace(tzinfo=None)) else 'EST')
         self.sessions_group = SessionService.split_by_day_session(self.data)
-        #self.sessions_group = DrInfoEnricher.enrich_group(self.sessions_group)
+        # self.sessions_group = self._dr_info_enricher.enrich_group(self.sessions_group)
         self.sorted_sessions = sorted(self.sessions_group.keys())
 
 
