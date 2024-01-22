@@ -3,7 +3,7 @@ import pandas as pd
 import sys
 
 sys.path.append('lib')
-from lib.services.processor import Processor
+from lib.services.dr_info_pipeline import DrInfoPipeline
 from lib.services.analyzer import Analyzer
 
 # Load sample data with ts_event as datetime index
@@ -19,12 +19,9 @@ regular_df.dropna(inplace=True)
 
 #  Using Processor
 analyzer = Analyzer()
-processor = Processor(data=regular_df, analyzer=analyzer)
+pipeline = DrInfoPipeline(data=regular_df, analyzer=analyzer)
 
-report = processor.analyze()
+result = pipeline.run_pipeline()
 
-report
-
-# %%
-processor.sessions_group
+result
 

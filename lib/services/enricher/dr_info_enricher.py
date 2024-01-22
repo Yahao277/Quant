@@ -18,7 +18,7 @@ class DrInfoEnricher:
         session_dto.rdr_info = rdr_info
         return session_dto
 
-    def enrich_group(self, sessions_group: dict[datetime, SessionDto]) -> dict[datetime, SessionDto]
+    def enrich_group(self, sessions_group: dict[datetime, SessionDto]) -> dict[datetime, SessionDto]:
         enriched_sessions_group = {}
         for timekey in sessions_group:
             enriched_sessions_group[timekey] = self.enrich(sessions_group[timekey])

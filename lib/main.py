@@ -3,7 +3,7 @@ import pandas as pd
 import sys
 
 sys.path.append('lib')
-from lib.services.processor import Processor
+from lib.services.dr_info_pipeline import Processor
 from lib.services.analyzer import Analyzer
 
 # Load sample data with ts_event as datetime index

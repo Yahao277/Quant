@@ -27,11 +27,11 @@ regular_df: pd.DataFrame = df.resample('5T').agg({'open': 'first',
 # drop nan values
 regular_df.dropna(inplace=True)
 
-from lib.services.processor import Processor
+from lib.services.dr_info_pipeline import DrInfoPipeline
 from lib.services.analyzer import Analyzer
 
 analyzer = Analyzer()
-processor = Processor(data=regular_df, analyzer=analyzer)
+processor = DrInfoPipeline(data=regular_df, analyzer=analyzer)
 
 report = processor.analyze()
 
