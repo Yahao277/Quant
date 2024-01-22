@@ -41,12 +41,12 @@ class DrInfo:
     has_confirmation: bool
     confirmation_direction: str  # Long or Short or Range
     confirmation_time: datetime
-    confirmation_candle_type: str  # Wick or Body Candle
+    #confirmation_candle_type: str  # Wick or Body Candle
     # Extension Info
     max_extension: PricePoint
     max_retracement: PricePoint
-    max_extension_before_retracement: PricePoint
-    max_retracement_before_extension: PricePoint
+    max_extension_before_retracement: Optional[PricePoint]
+    max_retracement_before_extension: Optional[PricePoint]
     max_extension_std: float
     max_retracement_std: float
     max_extension_before_retracement_std: float
@@ -65,4 +65,9 @@ class SessionDto:
     low: float
     close: float
     price_df: pd.DataFrame
-    dr_info: Optional[DrInfo] = None
+    adr_info: Optional[DrInfo] = None
+    odr_info: Optional[DrInfo] = None
+    rdr_info: Optional[DrInfo] = None
+
+
+SessionDtoBuilder = dataclass_builder(SessionDto)

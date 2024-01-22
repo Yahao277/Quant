@@ -10,7 +10,7 @@ process, clean, transform futures price data to be ready for analysis and iterat
 '''
 
 
-class Processor:
+class DrInfoProcessor:
     '''
     data: pd.DataFrame -> resampled 5minutes data
     '''
@@ -31,14 +31,5 @@ class Processor:
         self.sessions_group = self._dr_info_enricher.enrich_group(self.sessions_group)
         self.sorted_sessions = sorted(self.sessions_group.keys())
 
+    def process(self):
 
-    '''
-    Process each day's session and let analyzer to make custom analysis
-    '''
-    def analyze(self):
-        self.analyzer.reset()
-        for key in self.sorted_sessions:
-            session_data = self.sessions_group[key]
-            self.analyzer.analyze(session_data, self.data)
-        self.result = self.analyzer.report()
-        return self.result

@@ -19,11 +19,12 @@ def find_transition_dates(year):
     return est_to_edt, edt_to_est
 
 
-def is_edt(date):
+def is_edt(date: datetime):
     """
     Determine if a given date is in Eastern Daylight Time (EDT).
     """
-    year = date.year
+    cmp_date = date.replace(tzinfo=None) if date.tzinfo is not None else date
+    year = cmp_date.year
     est_to_edt, edt_to_est = find_transition_dates(year)
 
-    return est_to_edt <= date < edt_to_est
+    return est_to_edt <= cmp_date < edt_to_est
