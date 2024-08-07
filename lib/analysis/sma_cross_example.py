@@ -1,30 +1,26 @@
-# %% load files
+# %%
+import backtrader as bt
+from datetime import datetime
 import pandas as pd
-import sys
+from lib.strategies.sma_cross import SmaCross
 
-sys.path.append('lib')
-from lib.services.dr_info_pipeline import Processor
-from lib.services.analyzer import Analyzer
-
-# Load sample data with ts_event as datetime index
 df = pd.read_csv('data/out/ES.ohlcv-1m.sample.csv', index_col='ts_event', parse_dates=True)
 
-regular_df: pd.DataFrame = df.resample('5T').agg({'open': 'first',
-                                                  'high': 'max',
-                                                  'low': 'min',
-                                                  'close': 'last',
-                                                  'volume': 'sum'})
-# drop nan values
-regular_df.dropna(inplace=True)
+cerebro = bt.Cerebro()  # create a "Cerebro" engine instance
 
-#  Using Processor
-analyzer = Analyzer()
-processor = Processor(data=regular_df, analyzer=analyzer)
+# %% Create a data feed
+# Load Data
+data = bt.feeds.PandasData(dataname=df, fromdate=datetime(2017, 5, 21), todate=datetime(2017, 6, 1))
 
-report = processor.analyze()
+cerebro.resampledata(data, timeframe=bt.TimeFrame.Minutes, compression=30)
 
-report
+# cerebro.adddata(data)  # Add the data feed
 
-# %%
-processor.sessions_group
+cerebro.addstrategy(SmaCross)  # Add the trading strategy
 
+# %% Run Backtest
+print("Starting Portfolio Value: %.2f" % cerebro.broker.getvalue())
+cerebro.run()  # run it all
+print("Final Portfolio Value: %.2f" % cerebro.broker.getvalue())
+# %% Plot
+cerebro.plot()

@@ -1,17 +1,10 @@
 # %% load files
-from datetime import timedelta
-from typing import Optional
 
 import pandas as pd
 import sys
 
-from pandas import Timestamp
-
-from lib.models.session_dto import DrInfo, SessionDtoBuilder, SessionDto
-from datetime import timedelta
-
-from lib.services.enricher.dr_info_enricher import DrInfoEnricher
-from lib.services.session_service import SessionService
+from lib.modules.drinfo.enricher.dr_info_enricher import DrInfoEnricher
+from lib.modules.drinfo.session_service import SessionService
 from lib.utils.date_utils import *
 
 sys.path.append('lib')
@@ -27,8 +20,8 @@ regular_df: pd.DataFrame = df.resample('5T').agg({'open': 'first',
 # drop nan values
 regular_df.dropna(inplace=True)
 
-from lib.services.dr_info_pipeline import DrInfoPipeline
-from lib.services.analyzer import Analyzer
+from lib.modules.drinfo.dr_info_pipeline import DrInfoPipeline
+from lib.modules.drinfo.analyzer import Analyzer
 
 analyzer = Analyzer()
 processor = DrInfoPipeline(data=regular_df, analyzer=analyzer)

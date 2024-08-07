@@ -1,12 +1,9 @@
 import pandas as pd
 
-from lib.services.analyzer import Analyzer
-from lib.services.enricher.dr_info_enricher import DrInfoEnricher
-from lib.services.processors.day_session_splitter import DaySessionSplitter
-from lib.services.processors.dr_info_processor import DrInfoProcessor
-from lib.services.processors.timezone_processor import TimezoneProcessor
-from lib.utils.date_utils import (is_edt)
-from lib.services.session_service import SessionService
+from lib.modules.drinfo.analyzer import Analyzer
+from lib.modules.drinfo.processors.day_session_splitter import DaySessionSplitter
+from lib.modules.drinfo.processors.dr_info_processor import DrInfoProcessor
+from lib.modules.drinfo.processors.timezone_processor import TimezoneProcessor
 
 '''
 process, clean, transform futures price data to be ready for analysis and iteration

@@ -7,15 +7,15 @@ client = db.Historical(apikey)
 data = client.timeseries.get_range(
     dataset="GLBX.MDP3",
     stype_in='continuous',
-    symbols=["ES.v.0"],
-    schema="ohlcv-1m",
-    start="2017-05-21T00:00",
-    end="2023-11-12T023:50"
+    symbols=["NQ.v.0"],
+    schema="ohlcv-1s",
+    start="2021-09-01T00:00",
+    end="2024-05-28T00:00"
 )
 
 
 # %%
 data.to_df().head()
 # %%
-csv_path = 'data/in/ES.ohlcv-1m.csv'
+csv_path = 'data/in/NQ.ohlcv-1s.202109-202405-2.csv'
 data.to_csv(csv_path)
