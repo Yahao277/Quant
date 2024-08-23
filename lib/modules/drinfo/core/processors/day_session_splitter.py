@@ -1,6 +1,6 @@
 import pandas as pd
 
-from lib.modules.drinfo.session_service import SessionService
+from lib.modules.drinfo.core.session_service import SessionService
 
 
 class DaySessionSplitter:

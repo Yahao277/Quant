@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from lib.models.session_dto import SessionDto
-from lib.modules.drinfo.enricher.dr_info_enricher import DrInfoEnricher
+from lib.modules.drinfo.core.enricher.dr_info_enricher import DrInfoEnricher
 
 '''
 process, clean, transform futures price data to be ready for analysis and iteration

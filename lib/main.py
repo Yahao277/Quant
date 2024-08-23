@@ -4,7 +4,7 @@ import sys
 
 
 sys.path.append('lib')
-from lib.modules.drinfo.analyzer import Analyzer
+from lib.modules.drinfo.core.analyzer import Analyzer
 from lib.modules.drinfo.dr_info_pipeline import DrInfoPipeline
 
 # Load sample data with ts_event as datetime index

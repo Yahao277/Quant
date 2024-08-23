@@ -69,5 +69,8 @@ class SessionDto:
     odr_info: Optional[DrInfo] = None
     rdr_info: Optional[DrInfo] = None
 
+def to_dataframe(data: SessionDto) -> pd.DataFrame:
+
+    pass
 
 SessionDtoBuilder = dataclass_builder(SessionDto)

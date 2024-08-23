@@ -1,9 +1,9 @@
 import pandas as pd
 
-from lib.modules.drinfo.analyzer import Analyzer
-from lib.modules.drinfo.processors.day_session_splitter import DaySessionSplitter
-from lib.modules.drinfo.processors.dr_info_processor import DrInfoProcessor
-from lib.modules.drinfo.processors.timezone_processor import TimezoneProcessor
+from lib.modules.drinfo.core.analyzer import Analyzer
+from lib.modules.drinfo.core.processors.day_session_splitter import DaySessionSplitter
+from lib.modules.drinfo.core.processors.dr_info_processor import DrInfoProcessor
+from lib.modules.drinfo.core.processors.timezone_processor import TimezoneProcessor
 
 '''
 process, clean, transform futures price data to be ready for analysis and iteration

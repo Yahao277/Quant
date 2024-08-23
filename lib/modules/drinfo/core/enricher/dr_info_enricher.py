@@ -5,7 +5,7 @@ from pandas._libs.tslibs.timestamps import Timestamp
 from lib.models.session_dto import SessionDto, DrInfoBuilder, PricePoint, DrInfo
 import pandas as pd
 
-from lib.modules.drinfo.session_service import SessionService
+from lib.modules.drinfo.core.session_service import SessionService
 from lib.utils.date_utils import is_edt
 
 
